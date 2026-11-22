@@ -1,0 +1,183 @@
+.ef-page:has(.ef-route) {
+  padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+  background: #071724;
+}
+.ef-route {
+  --route-gap: max(12px, env(safe-area-inset-bottom, 0px));
+  --route-right: max(12px, calc((100vw - 1460px) / 2));
+  --route-width: min(426px, calc(100% - 24px));
+  --route-edge: #a9b9c75c;
+  position: fixed;
+  inset: auto var(--route-right) var(--route-gap) auto;
+  z-index: 6;
+  width: var(--route-width);
+  color: #fff8ed;
+}
+.ef-route-controls {
+  display: grid;
+  grid-template-columns: 49px minmax(0, 1fr) minmax(108px, auto);
+  align-items: stretch;
+  min-height: 54px;
+  border: 1px solid var(--route-edge);
+  border-radius: var(--ef-edition-corner);
+  background: #0b2132f7;
+  box-shadow: 0 7px 28px #030a1280;
+}
+.ef-route :is(.ef-route-direction, .ef-route-next) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  text-decoration: none;
+}
+.ef-route-direction {
+  border-right: 1px solid var(--route-edge);
+  font-size: 18px;
+}
+.ef-route span.ef-route-direction {
+  color: #91a6b5;
+  opacity: 0.6;
+}
+.ef-route button.ef-route-trigger {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 10px;
+  padding: 8px 11px;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  color: #fff8ed;
+}
+.ef-route-position {
+  color: #ffc58f;
+  white-space: nowrap;
+  font:
+    600 11px/1.25 ui-monospace,
+    monospace;
+}
+.ef-route-current {
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.1;
+}
+.ef-route-chevron {
+  line-height: 1;
+}
+.ef-route-progress {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(var(--route-steps, 6), 1fr);
+  gap: 3px;
+}
+.ef-route-progress i {
+  height: 2px;
+  border-radius: 1px;
+  background: #4a6374;
+}
+.ef-route-progress i[data-reached='true'] {
+  background: #ffc58f;
+}
+.ef-route .ef-route-next {
+  gap: 8px;
+  padding-inline: 10px;
+  border-radius: 0 12px 0 0;
+  background: var(--ef-edition-accent);
+  color: #071724;
+  font-size: 12px;
+  font-weight: 800;
+}
+.ef-route .ef-route-next:hover {
+  background: #ffd2a6;
+}
+.ef-route a.ef-route-direction:hover,
+.ef-route .ef-route-trigger:hover {
+  background: #244056;
+}
+.ef-route-menu {
+  position: fixed;
+  inset: auto var(--route-right) calc(var(--route-gap) + 64px) auto;
+  width: var(--route-width);
+  max-height: calc(100dvh - var(--route-gap) - 80px);
+  margin: 0;
+  padding: 15px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--route-edge);
+  border-radius: var(--ef-edition-corner);
+  background: #0b2132;
+  color: #fff8ed;
+  box-shadow: 0 9px 35px #030a12a8;
+}
+.ef-page .ef-route-menu p {
+  padding: 2px 8px 11px;
+  font-size: 15px;
+  font-weight: 750;
+}
+.ef-route-menu ol {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.ef-route-menu li a {
+  display: grid;
+  grid-template-columns: 23px minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  min-height: 43px;
+  padding: 7px 8px;
+  border-bottom: 1px solid #a9b9c72b;
+  color: inherit;
+  font-size: 13px;
+  text-decoration: none;
+}
+.ef-route-menu li a:hover,
+.ef-route-menu li a[aria-current] {
+  background: #244056;
+}
+.ef-route-menu li a > span {
+  color: #ffc58f;
+  font-size: 11px;
+}
+.ef-route-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 11px;
+  font-size: 11px;
+}
+.ef-route-options button {
+  min-height: 35px;
+  border: 1px solid #8ca6b9;
+  border-radius: 4px;
+  padding: 3px 8px;
+  background: transparent;
+  color: inherit;
+}
+.ef-route-options button[aria-pressed='true'] {
+  background: #ffbc7a;
+  color: #071724;
+}
+.ef-route-options a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 35px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (max-width: 360px) {
+  .ef-route-controls {
+    grid-template-columns: 43px minmax(0, 1fr) minmax(94px, auto);
+  }
+  .ef-route button.ef-route-trigger {
+    gap: 4px 6px;
+  }
+  .ef-route-current {
+    font-size: 12px;
+  }
+  .ef-route .ef-route-next {
+    font-size: 11px;
+  }
+}

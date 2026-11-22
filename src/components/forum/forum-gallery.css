@@ -1,0 +1,203 @@
+.forum-photos {
+  --fg-ink: #f7f8fa;
+  --fg-muted: #c7d7e2;
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 5fr);
+  gap: clamp(24px, 6vw, 92px);
+  align-items: center;
+  padding: clamp(22px, 4vw, 58px);
+  background: #102a3e;
+  color: var(--fg-ink);
+  border: 1px solid #365267;
+  margin-top: clamp(28px, 4vw, 56px);
+}
+.forum-photos .forum-photos-edition {
+  margin: 0 0 8px;
+  color: #add7e8;
+  font-size: 0.85rem;
+}
+.forum-photos h3 {
+  margin: 0 0 22px;
+  color: var(--fg-ink);
+  font:
+    650 clamp(23px, 3vw, 39px)/1.13 'DM Sans',
+    Arial,
+    sans-serif;
+  letter-spacing: -0.035em;
+}
+.forum-photos-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.forum-photos-thumbnails button {
+  display: grid;
+  align-content: start;
+  text-align: left;
+  gap: 6px;
+  background: #091f30;
+  border: 1px solid #547083;
+  color: var(--fg-muted);
+  padding: 4px;
+  cursor: pointer;
+  font:
+    650 0.76rem/1.2 'DM Sans',
+    Arial,
+    sans-serif;
+}
+.forum-photos-thumbnails button[aria-pressed='true'] {
+  border-color: #ffbf74;
+  color: #fff;
+}
+.forum-photos-thumbnails button span {
+  padding: 0 3px 3px;
+}
+.forum-photos-thumbnails img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+.forum-photos-preview {
+  margin: 0;
+  min-width: 0;
+}
+.forum-photos-preview > button {
+  position: relative;
+  padding: 0;
+  width: 100%;
+  display: block;
+  background: #091f30;
+  border: 0;
+  cursor: zoom-in;
+}
+.forum-photos-preview img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+.forum-photos-preview button > span {
+  position: absolute;
+  inset: auto 10px 10px auto;
+  display: flex;
+  gap: 10px;
+  border: 1px solid #a8b8c4;
+  background: #091b2bec;
+  padding: 8px 10px;
+  color: #fff;
+  font-size: 0.78rem;
+}
+.forum-photos-preview figcaption,
+.forum-lightbox-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--fg-muted);
+  margin: 0;
+  padding-top: 9px;
+  font-size: 0.85rem;
+}
+.forum-photos .forum-lightbox {
+  --fg-controls: #10273a;
+  width: min(1000px, calc(100% - 24px));
+  max-width: none;
+  height: min(780px, calc(100dvh - 24px));
+  max-height: none;
+  padding: 0;
+  overflow: hidden;
+  background: #071725;
+  border: 1px solid #5a7083;
+  color: white;
+}
+html:has(.forum-lightbox[open]) {
+  overflow: hidden;
+}
+.forum-lightbox::backdrop {
+  background: #030d17df;
+  backdrop-filter: blur(4px);
+}
+.forum-lightbox-content {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 100%;
+}
+.forum-lightbox-content header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 4px 10px 4px 14px;
+  min-width: 0;
+}
+.forum-photos .forum-lightbox h2 {
+  margin: 0;
+  font:
+    650 clamp(16px, 2vw, 20px)/1.2 'DM Sans',
+    Arial,
+    sans-serif;
+  letter-spacing: 0;
+  color: white;
+}
+.forum-lightbox button {
+  min-width: 44px;
+  min-height: 44px;
+  border: 1px solid #7890a1;
+  background: var(--fg-controls);
+  color: white;
+  cursor: pointer;
+  font:
+    600 22px/1 'DM Sans',
+    Arial,
+    sans-serif;
+}
+.forum-lightbox button:hover {
+  background: #25465d;
+}
+.forum-lightbox button:focus-visible,
+.forum-photos button:focus-visible {
+  outline: 2px solid #ffbf74;
+  outline-offset: -3px;
+}
+.forum-lightbox-stage {
+  position: relative;
+  display: grid;
+  min-height: 0;
+  min-width: 0;
+  background: #030f19;
+}
+.forum-lightbox-stage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  object-fit: contain;
+}
+.forum-lightbox-stage button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.forum-lightbox-prev {
+  left: 8px;
+}
+.forum-lightbox-next {
+  right: 8px;
+}
+.forum-photos .forum-lightbox-caption {
+  padding: 10px 14px;
+}
+@media (max-width: 680px) {
+  .forum-photos {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 15px;
+  }
+  .forum-photos h3 {
+    margin-bottom: 12px;
+  }
+  .forum-photos-thumbnails img {
+    aspect-ratio: 2 / 1;
+  }
+}

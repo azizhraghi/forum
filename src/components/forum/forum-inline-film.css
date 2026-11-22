@@ -1,0 +1,133 @@
+/* The hash target moves from the static player to a scroll marker after hydration. */
+html:has([data-forum-preview]) {
+  overflow-anchor: none;
+}
+.ef-inline-film {
+  position: relative;
+  display: grid;
+  align-items: end;
+  isolation: isolate;
+  min-height: min(560px, 88svh);
+  background: #071724;
+  color: #fff8ed;
+}
+.ef-inline-crowd {
+  display: none;
+}
+.ef-inline-media,
+.ef-inline-media > :is(img, video),
+.ef-inline-media::after {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.ef-inline-media {
+  z-index: -1;
+  overflow: hidden;
+}
+.ef-inline-media > :is(img, video) {
+  object-fit: cover;
+  object-position: 59% center;
+}
+.ef-inline-media video {
+  opacity: 0;
+}
+.ef-inline-media video[data-frame='ready'] {
+  opacity: 1;
+}
+.ef-inline-media::after {
+  content: '';
+  background: linear-gradient(0deg, #071724f7, #071724b5 27%, #07172422 64%, transparent);
+}
+.ef-inline-copy {
+  padding-block: 45px 86px;
+}
+.ef-page .ef-inline-copy > p {
+  color: var(--ef-edition-accent);
+  margin-bottom: 12px;
+}
+.ef-page .ef-inline-copy h2 {
+  max-width: 15ch;
+  font-size: clamp(35px, 5.8vw, 85px);
+  letter-spacing: -0.06em;
+  line-height: 0.95;
+  margin-bottom: 18px;
+}
+.ef-inline-controls,
+.ef-inline-next {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px 12px;
+}
+.ef-page .ef-inline-controls button {
+  padding: 8px 13px;
+  min-height: 44px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff8ed;
+  background: #0c2538e8;
+  border: 1px solid #9bb6c5;
+  border-radius: var(--ef-edition-corner);
+}
+.ef-page .ef-inline-controls button:nth-of-type(2) {
+  color: #071724;
+  border-color: var(--ef-edition-accent);
+  background: var(--ef-edition-accent);
+}
+.ef-inline-controls a,
+.ef-inline-next a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 12px;
+  font-weight: 750;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.ef-inline-next {
+  margin-top: 7px;
+  gap: 5px 20px;
+}
+.ef-filmstory[data-preview][data-enhanced='true'] .ef-inline-crowd {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: var(--story-crowd, 0);
+  overflow: clip;
+  pointer-events: none;
+}
+.ef-inline-crowd img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 57% 53%;
+  transform: scale(calc(1.1 - var(--story-crowd, 0) * 0.1));
+  filter: brightness(0.72);
+}
+.ef-filmstory[data-preview][data-enhanced='true'] .ef-inline-film {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  opacity: var(--story-inline-film, 0);
+  pointer-events: none;
+}
+.ef-filmstory[data-preview][data-enhanced='true'] .ef-inline-film:not([inert]) :is(a, button) {
+  pointer-events: auto;
+}
+.ef-filmstory[data-preview]:not([data-enhanced='true']) .ef-inline-film {
+  margin-top: 8px;
+}
+@media (max-width: 690px) {
+  .ef-inline-copy {
+    padding-block: 26px 88px;
+  }
+  .ef-inline-media > :is(img, video) {
+    object-position: 57% center;
+  }
+  .ef-page .ef-inline-copy h2 {
+    font-size: clamp(31px, 9vw, 55px);
+  }
+}

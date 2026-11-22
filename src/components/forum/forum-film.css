@@ -1,0 +1,93 @@
+.ef-page .ef-story-audience-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px 28px;
+  margin-top: clamp(20px, 4vh, 40px);
+}
+.ef-page .ef-story-audience-actions > a {
+  margin-top: 0;
+}
+.ef-page .ef-watch-film {
+  gap: 14px;
+  background: var(--ef-edition-accent);
+  color: #071724;
+  padding: 10px 18px 10px 11px;
+  border-radius: var(--ef-edition-corner);
+  text-decoration: none;
+}
+.ef-page .ef-watch-film:hover {
+  background: #ffd2a6;
+}
+.ef-watch-film strong,
+.ef-watch-film small {
+  display: block;
+  line-height: 1.35;
+}
+.ef-watch-film small {
+  font-size: 11px;
+}
+.ef-watch-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #07172480;
+  border-radius: 50%;
+  font-size: 13px;
+}
+html:has(.ef-cinema[open]) {
+  overflow: hidden;
+}
+.ef-cinema {
+  width: min(1120px, calc(100% - 22px));
+  max-width: none;
+  max-height: calc(100dvh - 24px);
+  padding: 0;
+  margin: auto;
+  background: #081924;
+  color: #fff8ed;
+  border: 1px solid #536b79;
+  pointer-events: auto;
+}
+.ef-cinema::backdrop {
+  background: #010810ed;
+}
+.ef-cinema-header,
+.ef-cinema-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px clamp(12px, 3vw, 24px);
+  gap: 5px 18px;
+}
+.ef-page .ef-cinema .ef-cinema-header h2 {
+  font-size: clamp(16px, 2vw, 22px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.ef-cinema-header button {
+  min-width: 44px;
+  min-height: 44px;
+  border: 1px solid #526d7d;
+  background: #102737;
+  color: inherit;
+  font-size: 23px;
+}
+.ef-cinema video {
+  display: block;
+  height: min(56.25vw, calc(100dvh - 142px), 630px);
+  width: 100%;
+  object-fit: contain;
+  background: #000;
+}
+.ef-cinema-footer {
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+.ef-page .ef-cinema-footer a {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0;
+}
