@@ -175,6 +175,7 @@ export function ForumInlineFilm() {
           <a href={source}>Film depuis le début ↗</a>
         </div>
         <div className="ef-inline-next">
+          <a href="#teaser">La prochaine édition ↓</a>
           <a href="#photos">Voir les photos ↓</a>
           <a href="#programme">Préparer ma journée ↘</a>
         </div>

@@ -1,0 +1,15 @@
+.ef-artwork-dialog{width:min(820px,calc(100% - 40px));max-height:calc(100dvh - 40px);padding:0;border:1px solid #748793;background:#092b43;color:#f5f4ed;overflow:auto;box-shadow:0 30px 100px #0008}
+.ef-artwork-dialog::backdrop{background:#03121de8;backdrop-filter:blur(8px)}
+.ef-artwork-content header{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:25px 30px}
+.ef-artwork-content header p{font-size:12px;color:#ffbc7a;line-height:1.5;margin:0 0 8px}
+.ef-page .ef-artwork-content header h2{font-size:clamp(24px,4vw,38px);line-height:1.1;letter-spacing:-.04em;margin:0;color:#f5f4ed}
+.ef-artwork-content form{margin:0}
+.ef-artwork-content button{width:44px;height:44px;border:1px solid #a4bac6;background:transparent;color:#f5f4ed;font-size:28px;line-height:1;cursor:pointer}
+.ef-artwork-content button:focus-visible{outline:2px solid #ffbc7a;outline-offset:4px}
+.ef-artwork-logo{height:min(45svh,390px);min-height:180px;padding:45px 12%;display:grid;place-items:center;background:#fff}
+.ef-artwork-logo svg{width:100%;height:100%;max-height:270px;max-width:540px;overflow:hidden}
+.ef-artwork-logo:is([data-company=visteon],[data-company=onetech],[data-company=kawther]) svg{max-width:250px}
+.ef-artwork-content footer{display:flex;justify-content:space-between;gap:20px;padding:18px 30px;font-size:12px;line-height:1.5;color:#c5d8de}
+.ef-page .ef-artwork-content footer>span{display:block}
+@media(max-width:480px){.ef-artwork-dialog{width:calc(100% - 24px);max-height:calc(100dvh - 24px)}.ef-artwork-content header{padding:20px;gap:16px}.ef-artwork-content header p{font-size:11px}.ef-artwork-content button{width:40px;height:40px}.ef-artwork-logo{height:35svh;min-height:180px;padding:30px 9%}.ef-artwork-content footer{padding:16px 20px;font-size:11px;flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){.ef-artwork-dialog::backdrop{backdrop-filter:none}}

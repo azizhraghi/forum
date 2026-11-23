@@ -314,11 +314,6 @@
   width: clamp(46px, 6vw, 76px);
   height: auto;
 }
-.ef-ticket-heading > span:last-child {
-  margin-left: auto;
-  font-size: 30px;
-  color: #a94b17;
-}
 .ef-page .ef-ticket-date {
   margin-top: 17px;
   font-size: clamp(21px, 2.4vw, 35px);

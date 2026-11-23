@@ -5,9 +5,9 @@ Official website for the 9th edition of the **Forum ENSTAB** (Energy Sovereignty
 ## Features
 
 - **Cinematic Scrollytelling**: Interactive Earth-to-campus descent, video scrubbing, and theme revelation.
-- **3D Campus Explorer**: Interactive Three.js 3D campus model with key locations and waypoints (`/campus/`).
 - **Programme & Calendar**: Event agenda preview and instant calendar export (`.ics`).
-- **Partner & Sponsoring Showcase**: Historical partner wall and direct invitation inquiry.
+- **Edition 2026**: Guests of honour, eleven exhibitors, sponsors and musical collaborator, with clean in-page logo previews.
+- **Registration**: Direct Volunteery registration and Google Maps directions.
 - **Interactive Photo Gallery**: Highlights and moments from previous editions.
 
 ## Getting Started

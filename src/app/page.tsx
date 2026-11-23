@@ -1,13 +1,12 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { ForumCountdown } from '@/components/forum/ForumCountdown';
 import { ForumStory } from '@/components/forum/ForumStory';
 import { ForumRoute } from '@/components/forum/ForumRoute';
 import { ForumContinuation } from '@/components/forum/ForumContinuation';
 import { ForumGallery } from '@/components/forum/ForumGallery';
+import { ForumLineup } from '@/components/forum/ForumLineup';
 import { enstab } from '@/content/enstab';
 import { forum } from '@/content/forum';
-import { partners } from '@/content/partners';
 import { site } from '@/content/site';
 import './forum.css';
 import '@/components/forum/forum-continuation.css';
@@ -34,10 +33,11 @@ export default function ForumPage() {
             <sup>09</sup>
           </a>
           <nav className="ef-direct-nav" aria-label="Accès directs">
+            <a href="#invites">Invités</a>
             <a href="#programme">Programme</a>
-            <a href="#entreprises">Entreprises</a>
-            <a className="ef-header-cta" href="#participer">
-              Infos pratiques <span aria-hidden="true">↗</span>
+            <a href="#edition-entreprises">Entreprises</a>
+            <a className="ef-header-cta" href={forum.registrationUrl!} target="_blank" rel="noreferrer">
+              S’inscrire <span aria-hidden="true">↗</span>
             </a>
           </nav>
         </div>
@@ -45,6 +45,7 @@ export default function ForumPage() {
       <main id="forum-main" tabIndex={-1}>
         <ForumStory preview={true} />
         <ForumContinuation>
+          <ForumLineup />
           <section id="film" tabIndex={-1} className="ef-film" aria-labelledby="forum-film-title">
             <div className="ef-wrap ef-film-inner">
               <div className="ef-film-heading">
@@ -62,65 +63,10 @@ export default function ForumPage() {
               <div className="ef-archive-spread">
                 <ForumGallery />
               </div>
-              <a href="#entreprises" className="ef-story-handoff">
+              <a href="#programme" className="ef-story-handoff">
                 <span>
-                  Les entreprises qui nous ont fait confiance <b aria-hidden="true">↘</b>
+                  Préparer ma journée <b aria-hidden="true">↘</b>
                 </span>
-              </a>
-            </div>
-          </section>
-
-          <section
-            id="entreprises"
-            tabIndex={-1}
-            className="ef-partners ef-connections"
-            data-chapter="connections"
-            aria-labelledby="forum-companies-title"
-          >
-            <div className="ef-wrap ef-connections-inner">
-              <div className="ef-partners-intro">
-                <div>
-                  <p className="ef-index">Partenaires et éditions précédentes</p>
-                  <h2 id="forum-companies-title">
-                    Ils nous ont <em>fait confiance.</em>
-                  </h2>
-                </div>
-                <p>
-                  Des partenaires d’ETC et des entreprises qui ont pris part aux éditions
-                  précédentes du Forum.
-                </p>
-                <a href="#company-invitation" className="ef-connections-link">
-                  Écrire la suite avec ETC <span aria-hidden="true">↓</span>
-                </a>
-              </div>
-              <div className="ef-connections-wall">
-                <ul className="ef-partner-grid">
-                  {partners.map(({ name, slug }, index) => (
-                    <li key={slug} data-lane={index % 3}>
-                      <img src={`/assets/partners/${slug}.png`} alt={name} loading="lazy" />
-                    </li>
-                  ))}
-                </ul>
-                <p className="ef-connections-footnote">Références historiques d’ETC et du Forum.</p>
-              </div>
-            </div>
-            <div id="company-invitation" className="ef-wrap ef-company-invitation">
-              <span className="ef-invitation-arrow" aria-hidden="true">
-                ↗
-              </span>
-              <div>
-                <p className="ef-index">Entreprises · 9e édition</p>
-                <h3>
-                  La prochaine rencontre
-                  <br />
-                  pourrait être <em>la vôtre.</em>
-                </h3>
-              </div>
-              <a
-                href={`mailto:${site.email}?subject=Participer%20au%209e%20Forum%20ENSTAB`}
-                className="ef-primary"
-              >
-                Échangeons sur votre participation <span aria-hidden="true">↗</span>
               </a>
             </div>
           </section>
@@ -167,7 +113,6 @@ export default function ForumPage() {
             <div className="ef-destination-backdrop" aria-hidden="true">
               <img src={enstab.aerial} alt="" width="1440" height="810" loading="lazy" />
               <div className="ef-campus-pin">
-                <span>+</span>
                 <b>ENSTAB</b>
                 <small>Borj Cédria</small>
               </div>
@@ -181,9 +126,6 @@ export default function ForumPage() {
                   <br />
                   <em>à l’ENSTAB.</em>
                 </h2>
-                <Link href="/campus/" prefetch={false}>
-                  Explorer le campus en 3D <span aria-hidden="true">↗</span>
-                </Link>
               </div>
               <div className="ef-arrival-ticket">
                 <div className="ef-ticket-heading">
@@ -193,7 +135,6 @@ export default function ForumPage() {
                     <br />
                     <b>9e édition · 2026</b>
                   </span>
-                  <span aria-hidden="true">↗</span>
                 </div>
                 <p className="ef-ticket-date">
                   <span>25</span> novembre
@@ -216,30 +157,27 @@ export default function ForumPage() {
                     <dt>Programme</dt>
                     <dd>À paraître</dd>
                   </div>
-                  <div>
-                    <dt>Inscriptions</dt>
-                    <dd>
-                      {forum.registrationUrl ? (
-                        <a href={forum.registrationUrl}>S’inscrire ↗</a>
-                      ) : (
-                        'Ouverture à venir'
-                      )}
-                    </dd>
-                  </div>
                 </dl>
                 <ForumCountdown />
                 <div className="ef-visit-actions">
+                  {forum.registrationUrl && (
+                    <a
+                      className="ef-primary ef-register"
+                      href={forum.registrationUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      S’inscrire au Forum <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
                   <a
-                    className="ef-primary"
+                    className="ef-outline"
                     href={enstab.directions}
                     target="_blank"
                     rel="noreferrer"
                   >
                     Itinéraire <span aria-hidden="true">↗</span>
                   </a>
-                  <Link className="ef-outline" href="/campus/#forum-access" prefetch={false}>
-                    Voir le plan du campus <span aria-hidden="true">↗</span>
-                  </Link>
                 </div>
                 <a className="ef-poster" href={poster} target="_blank" rel="noreferrer">
                   <img

@@ -26,11 +26,12 @@ function scrub(video: HTMLVideoElement, filename: string) {
   let progress = 0;
   let appliedTime = Number.NaN;
   let requested = false;
+  let enabled = false;
   function seek() {
-    if (video.seeking || !Number.isFinite(video.duration) || video.readyState < 2) return;
+    if (!enabled || video.seeking || !Number.isFinite(video.duration) || video.readyState < 2) return;
     const time = progress * Math.max(0, video.duration - 0.05);
-    if (Number.isFinite(appliedTime) && Math.abs(time - appliedTime) < 0.065) return;
-    if (Math.abs(video.currentTime - time) > 0.034) {
+    if (Number.isFinite(appliedTime) && Math.abs(time - appliedTime) < 0.025) return;
+    if (Math.abs(video.currentTime - time) > 0.02) {
       appliedTime = time;
       video.currentTime = time;
     }
@@ -43,12 +44,13 @@ function scrub(video: HTMLVideoElement, filename: string) {
   video.addEventListener('seeked', seek);
   video.addEventListener('loadedmetadata', loaded);
   return {
-    update(next: number, enabled: boolean) {
+    update(next: number, enabledNext: boolean) {
       progress = next;
-      if (enabled) {
+      enabled = enabledNext;
+      if (enabledNext) {
         if (!video.hasAttribute('src')) {
           video.src = media + filename;
-          video.preload = 'metadata';
+          video.preload = 'auto';
           requested = true;
         }
         if (video.readyState < 2 && !requested) {
@@ -81,6 +83,7 @@ function SceneVideo({ player }: { player: React.RefObject<HTMLVideoElement | nul
         delete currentTarget.dataset.ready;
       }}
       onError={({ currentTarget }) => {
+        currentTarget.dataset.failed = 'true';
         delete currentTarget.dataset.ready;
       }}
     />
@@ -99,8 +102,9 @@ export function ForumStory({ preview = false }: { preview?: boolean }) {
     const section = root.current;
     const screen = stage.current;
     if (!section || !screen || !player.current || !globe.current) return;
-    const campus = scrub(player.current, 'enstab-story.mp4');
-    const earth = scrub(globe.current, 'earth-descent.mp4');
+    const campus = scrub(player.current, 'enstab-story-scrub.mp4');
+    campus.update(0,true);
+    const earth = scrub(globe.current, 'earth-descent-scrub.mp4');
     const preference = window.matchMedia('(prefers-reduced-motion: reduce), (max-height: 470px)');
     const connection = (
       navigator as Navigator & {
@@ -118,6 +122,15 @@ export function ForumStory({ preview = false }: { preview?: boolean }) {
     const crowdAnchor = section.querySelector<HTMLElement>('[data-story-anchor="rencontres"]');
     let frame = 0;
     let simplified = false;
+    let distance = 1, top = 0, sectionTop = 0, screenHeight = 0;
+    const applied = new Map<string,number>();
+    function geometry(){
+      if(!section||!screen)return;
+      distance = Math.max(1,section.offsetHeight-screen.offsetHeight);
+      screenHeight=screen.offsetHeight;
+      top=parseFloat(getComputedStyle(screen).top)||0;
+      sectionTop=section.getBoundingClientRect().top+scrollY;
+    }
 
     function update() {
       frame = 0;
@@ -153,6 +166,7 @@ export function ForumStory({ preview = false }: { preview?: boolean }) {
         themeAnchor.id = full ? 'theme' : '';
         if (crowdAnchor) crowdAnchor.id = full ? 'rencontres' : '';
         previousLayout.current = full;
+        geometry();
         if (restore && (first || restore === 'theme' || restore === 'rencontres')) {
           document.getElementById(restore)?.scrollIntoView({ behavior: 'instant' });
         } else if (pastStory && film) {
@@ -168,9 +182,9 @@ export function ForumStory({ preview = false }: { preview?: boolean }) {
         section.dataset.film = 'idle';
         return;
       }
-      const distance = Math.max(1, section.offsetHeight - screen.offsetHeight);
-      const top = Number.parseFloat(getComputedStyle(screen).top) || 0;
-      const progress = clamp((top - section.getBoundingClientRect().top) / distance);
+      const progress = clamp((scrollY - sectionTop + top) / distance);
+      const visibleStory = scrollY + innerHeight > sectionTop && scrollY < sectionTop + distance + screenHeight;
+      if(!visibleStory){earth.update(0,false);campus.update(0,false);return;}
       const handoff = between(progress, 0.16, 0.29);
       const regionArrival = between(progress, 0.17, 0.29);
       const campusArrival = between(progress, 0.29, 0.36);
@@ -194,7 +208,7 @@ export function ForumStory({ preview = false }: { preview?: boolean }) {
         const filmReveal = between(progress, 0.8, 0.93);
         values['inline-film'] = filmReveal;
         inlineFilm.inert = progress < 0.9;
-        const visible = section.getBoundingClientRect().bottom > top + screen.offsetHeight * 0.3;
+        const visible = sectionTop + distance + screenHeight - scrollY > top + screenHeight * 0.3;
         const filmPhase =
           progress >= 0.89 && visible ? 'active' : progress >= 0.62 ? 'warm' : 'idle';
         if (section.dataset.film !== filmPhase) section.dataset.film = filmPhase;
@@ -203,7 +217,7 @@ export function ForumStory({ preview = false }: { preview?: boolean }) {
         values[`word-${index}`] = between(progress, from, from + 0.075);
       }
       for (const [name, value] of Object.entries(values)) {
-        screen.style.setProperty(`--story-${name}`, String(value));
+        if(applied.get(name)!==value){screen.style.setProperty(`--story-${name}`, String(value));applied.set(name,value);}
       }
       opening.inert = progress >= 0.13;
       theme.inert = progress < storyChapters.theme.start || progress >= 0.79;
@@ -217,14 +231,14 @@ export function ForumStory({ preview = false }: { preview?: boolean }) {
             : '';
       if (section.dataset.chapter !== currentChapter.current)
         section.dataset.chapter = currentChapter.current;
-      earth.update(between(progress, 0, 0.29), true);
+      earth.update(between(progress, 0, 0.29), progress < .34);
       const revealEnd = storyChapters.theme.landing;
       const revealFrame = between(revealEnd, 0.24, 0.71);
       const approach =
         preview && progress > revealEnd
           ? revealFrame + (1 - revealFrame) * between(progress, revealEnd, 0.81)
           : between(progress, 0.24, 0.71);
-      campus.update(approach, true);
+      campus.update(approach, progress > .27 && progress < .94);
     }
 
     function schedule() {
@@ -234,20 +248,22 @@ export function ForumStory({ preview = false }: { preview?: boolean }) {
       simplified = Boolean((event as CustomEvent<{ reduced: boolean }>).detail?.reduced);
       update();
     }
-    const observer = new ResizeObserver(schedule);
+    const resized=()=>{geometry();schedule();};
+    const observer = new ResizeObserver(resized);
     observer.observe(section);
     observer.observe(screen);
     window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule);
+    window.addEventListener('resize', resized);
     window.addEventListener('forum-motion-change', changeMotion);
     preference.addEventListener('change', schedule);
     connection?.addEventListener('change', schedule);
+    geometry();
     update();
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
       window.removeEventListener('scroll', schedule);
-      window.removeEventListener('resize', schedule);
+      window.removeEventListener('resize', resized);
       window.removeEventListener('forum-motion-change', changeMotion);
       preference.removeEventListener('change', schedule);
       connection?.removeEventListener('change', schedule);

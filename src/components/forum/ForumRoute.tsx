@@ -8,8 +8,10 @@ const storyChapters = [
   { id: 'forum-main', label: 'De la Terre au campus', short: 'Le départ' },
   { id: 'theme', label: 'Souveraineté énergétique', short: 'Le thème' },
   { id: 'rencontres', label: 'Le Forum de l’intérieur', short: 'Le film' },
+  { id: 'teaser', label: 'Le teaser de cette édition', short: 'Teaser 2026' },
+  { id: 'invites', label: 'Les invités d’honneur', short: 'Invités' },
+  { id: 'edition-entreprises', label: 'Les exposants et sponsors 2026', short: 'Édition 2026' },
   { id: 'film', label: 'Le Forum en photos', short: 'Les photos' },
-  { id: 'entreprises', label: 'Les entreprises', short: 'Entreprises' },
 ] as const;
 const standardChapters = [...storyChapters, visit];
 const previewChapters = [
@@ -151,7 +153,7 @@ export function ForumRoute({ preview = false }: { preview?: boolean }) {
           >
             Réduire les mouvements
           </button>
-          <a href="https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/base-map/">
+          <a href="https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/base-map/" target="_blank" rel="noreferrer">
             Imagerie · NASA
           </a>
         </div>
