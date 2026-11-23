@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import './forum-lineup.css';
 import { ExhibitorWall } from './ExhibitorWall';
 import { EditionArtworkViewer } from './EditionArtworkViewer';
@@ -39,7 +39,7 @@ export function ForumLineup() {
       const rect = section.getBoundingClientRect();
       const progress = Math.max(0, Math.min(1, (90 - rect.top) / Math.max(1, section.offsetHeight - innerHeight + 90)));
 
-      if (!manualGuest.current) setGuest(Math.min(5, Math.floor(progress * 6)));
+      if (!manualGuest.current) setGuest(Math.min(guests.length - 1, Math.floor(progress * guests.length)));
       container.style.setProperty('--lineup-journey', String(progress));
     }
     function schedule() { if (!frame) frame = requestAnimationFrame(update); }
@@ -59,20 +59,20 @@ export function ForumLineup() {
     return () => { cancelAnimationFrame(frame); removeEventListener('wheel', resumeScroll); removeEventListener('touchmove', resumeScroll); removeEventListener('keydown', resumeScroll); removeEventListener('scroll', schedule); removeEventListener('resize', schedule); removeEventListener('forum-motion-change', motion); preference.removeEventListener('change', schedule); };
   }, []);
 
-  return <EditionArtworkViewer><div ref={root} className="ef-lineup-story">
+  return <EditionArtworkViewer><div ref={root} className="ef-lineup-story" style={{ '--guest-count': guests.length } as CSSProperties}>
     <section id="teaser" className="ef-premiere" aria-labelledby="teaser-title" tabIndex={-1}>
       <div className="ef-wrap ef-premiere-heading"><p className="ef-index">Le prochain chapitre · 25 novembre 2026</p><h2 id="teaser-title">Ce qui nous<br />met en <em>mouvement.</em></h2><a href="#invites">Les voix de cette édition <span aria-hidden="true">↘</span></a></div>
       <div className="ef-premiere-screen"><span className="ef-premiere-side" aria-hidden="true">ENSTAB / 09 — 2026</span><video controls playsInline preload="none" poster="/assets/forum/official-banner.webp" aria-label="Teaser officiel du Forum ENSTAB 2026"><source src="/assets/forum/teaser-2026.mp4" type="video/mp4" /><a href="/assets/forum/teaser-2026.mp4">Ouvrir le teaser</a></video><div className="ef-premiere-caption"><span>01 / Le teaser officiel</span><span>Energy Sovereignty in Action</span></div></div>
     </section>
     <section id="invites" className="ef-voices" aria-labelledby="guests-title" tabIndex={-1}>
       <div className="ef-voices-stage"><div className="ef-voices-progress" aria-hidden="true"><i /></div>
-        <div className="ef-wrap ef-voices-top"><p className="ef-index">02 / Les invités d’honneur</p><h2 id="guests-title">L’énergie<br />a des <em>visages.</em></h2><span className="ef-voices-count" aria-hidden="true">{number(guest)}<small> / 06</small></span></div>
+        <div className="ef-wrap ef-voices-top"><p className="ef-index">02 / Les invités d’honneur</p><h2 id="guests-title">L’énergie<br />a des <em>visages.</em></h2><span className="ef-voices-count" aria-hidden="true">{number(guest)}<small> / {String(guests.length).padStart(2,'0')}</small></span></div>
         <div className="ef-wrap ef-voice-composition">
           <div className="ef-campus-medallion" aria-hidden="true"><div className="ef-campus-medallion-image"><img src="/assets/forum/enstab-aerial.webp" alt="" loading="lazy" /><i /></div><span className="ef-campus-coordinate">36.70723° N<br />10.42673° E</span><p>Un lieu.<br /><strong>Des perspectives.</strong></p><span className="ef-campus-location">ENSTAB · Borj Cédria</span><svg viewBox="0 0 300 100"><path d="M0 50 H190 Q220 50 235 30 L265 0" fill="none" stroke="currentColor"/><circle cx="190" cy="50" r="3" fill="currentColor"/></svg></div>
           <div className="ef-portraits">{guests.map(([name,,photo],i)=><div key={name} className="ef-portrait" data-active={guest===i} aria-hidden={guest!==i}><img src={'/assets/forum/guests/'+photo} alt={name} width="680" height="680" loading={i===0?'eager':'lazy'} /></div>)}</div>
-          <div className="ef-voice-copy"><span className="ef-voice-org">{guests[guest][3]}</span><h3>{guests[guest][0]}</h3><p lang={guest===5?'fr':'en'}>{guests[guest][1]}</p><div className="ef-voice-arrows"><button type="button" disabled={guest===0} aria-label="Invité précédent" onClick={()=>{manualGuest.current=true;setGuest(guest-1);}}>←</button><span>{number(guest)} / 06</span><button type="button" disabled={guest===5} aria-label="Invité suivant" onClick={()=>{manualGuest.current=true;setGuest(guest+1);}}>→</button></div></div>
+          <div className="ef-voice-copy"><span className="ef-voice-org">{guests[guest][3]}</span><h3>{guests[guest][0]}</h3><p lang="en">{guests[guest][1]}</p><div className="ef-voice-arrows"><button type="button" disabled={guest===0} aria-label="Invité précédent" onClick={()=>{manualGuest.current=true;setGuest(guest-1);}}>←</button><span>{number(guest)} / {String(guests.length).padStart(2,'0')}</span><button type="button" disabled={guest===guests.length-1} aria-label="Invité suivant" onClick={()=>{manualGuest.current=true;setGuest(guest+1);}}>→</button></div></div>
         </div>
-        <nav className="ef-wrap ef-voice-selector" aria-label="Choisir un invité" onKeyDown={(event)=>{if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();manualGuest.current=true;const next=(guest+(event.key==='ArrowRight'?1:5))%6;setGuest(next);(event.currentTarget.children[next] as HTMLButtonElement)?.focus();}}}>{guests.map(([name,,,org],i)=><button key={name} type="button" aria-pressed={guest===i} onClick={()=>{manualGuest.current=true;setGuest(i);}}><img src={"/assets/forum/guests/"+guests[i][2]} alt="" loading="lazy" /><span>{number(i)}</span><strong>{name}</strong><small>{org}</small></button>)}</nav>
+        <nav className="ef-wrap ef-voice-selector" aria-label="Choisir un invité" onKeyDown={(event)=>{if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();manualGuest.current=true;const next=(guest+(event.key==='ArrowRight'?1:guests.length-1))%guests.length;setGuest(next);(event.currentTarget.children[next] as HTMLButtonElement)?.focus();}}}>{guests.map(([name,,,org],i)=><button key={name} type="button" aria-pressed={guest===i} onClick={()=>{manualGuest.current=true;setGuest(i);}}><img src={"/assets/forum/guests/"+guests[i][2]} alt="" loading="lazy" /><span>{number(i)}</span><strong>{name}</strong><small>{org}</small></button>)}</nav>
         <a className="ef-voices-exit" href="#edition-entreprises">La rencontre continue <span aria-hidden="true">↓</span></a>
       </div>
     </section>

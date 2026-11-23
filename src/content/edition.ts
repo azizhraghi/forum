@@ -4,7 +4,6 @@ export const guests = [
   ['Hassen Marzouki', 'Project Coordinator and Energy Efficiency Specialist · UNDP Tunisia', 'hassen marzouki.png', 'UNDP'],
   ['Bayssen Amami', 'Decarbonization and R&D Officer · ANME', 'bayssen amami.png', 'ANME'],
   ['Nada Lachaal', 'CEO · Management Company of the Borj Cédria Technopark', 'nada lachaal.png', 'Technopark'],
-  ['Nafaa Baccari', 'Invité du Forum', 'nafaa baccari.png', 'Forum ENSTAB'],
 ];
 export const exhibitors = [['ALTRICS','altrics'], ['Visteon','visteon'], ['Wifak Bank','wifak-bank'], ['Eco Energy','eco-energy'], ['BAKO','bako'], ['OneTech B.S','onetech'], ['Hi Talents','hi-talents'], ['AKSA Composites','aksa'], ['ORBIT Engineering Solutions','orbit'], ['GOMYCODE','gomycode'], ['Kaizen Water','kaizen-water']];
 export const sponsors = [['Ecopark Borj-Cédria','ecopark'], ['PAEB · Bizerta Free Zone','paeb'], ['Librairie Imprimerie Kawther','kawther']];
