@@ -5,6 +5,7 @@ import { ForumRoute } from '@/components/forum/ForumRoute';
 import { ForumContinuation } from '@/components/forum/ForumContinuation';
 import { ForumGallery } from '@/components/forum/ForumGallery';
 import { ForumLineup } from '@/components/forum/ForumLineup';
+import { ForumProgramme } from '@/components/forum/ForumProgramme';
 import { enstab } from '@/content/enstab';
 import { forum } from '@/content/forum';
 import { site } from '@/content/site';
@@ -34,6 +35,7 @@ export default function ForumPage() {
           </a>
           <nav className="ef-direct-nav" aria-label="Accès directs">
             <a href="#invites">Invités</a>
+            <a href="#panelistes">Panélistes</a>
             <a href="#programme">Programme</a>
             <a href="#edition-entreprises">Entreprises</a>
             <a className="ef-header-cta" href={forum.registrationUrl!} target="_blank" rel="noreferrer">
@@ -71,37 +73,7 @@ export default function ForumPage() {
             </div>
           </section>
 
-          <section
-            id="programme"
-            tabIndex={-1}
-            className="ef-programme"
-            aria-labelledby="forum-programme-title"
-          >
-            <div className="ef-wrap ef-programme-inner">
-              <div>
-                <p className="ef-index">9e édition · Forum ENSTAB</p>
-                <h2 id="forum-programme-title">Programme</h2>
-                <p className="ef-programme-status">Le programme détaillé sera publié ici.</p>
-              </div>
-              <div className="ef-programme-visit">
-                <time dateTime={forum.date}>{forum.dateLabel}</time>
-                <p>
-                  {forum.venue} · {forum.locality}
-                </p>
-                <div className="ef-programme-actions">
-                  <a href="/assets/forum/forum-enstab.ics" download>
-                    Ajouter au calendrier <span aria-hidden="true">↓</span>
-                  </a>
-                  <a href={enstab.directions} target="_blank" rel="noreferrer">
-                    Itinéraire <span aria-hidden="true">↗</span>
-                  </a>
-                  <a href="#participer">
-                    Infos pratiques <span aria-hidden="true">↓</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </section>
+          <ForumProgramme />
 
           <section
             id="participer"
@@ -155,7 +127,7 @@ export default function ForumPage() {
                   </div>
                   <div>
                     <dt>Programme</dt>
-                    <dd>À paraître</dd>
+                    <dd><a href="#programme">Consulter le programme ↗</a></dd>
                   </div>
                 </dl>
                 <ForumCountdown />

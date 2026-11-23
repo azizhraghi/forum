@@ -18,6 +18,7 @@ const standardChapters = [...storyChapters, visit];
 const previewChapters = [
   ...storyChapters,
   { id: 'programme', label: 'Programme du Forum', short: 'Programme' },
+  { id: 'formation', label: 'Formation GOMYCODE · 14h00', short: 'Formation' },
   visit,
 ];
 

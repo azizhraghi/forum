@@ -19,9 +19,11 @@
 - Calendar endpoint returns 200 with the confirmed 25 November 2026 all-day date; both film endpoints return 200 video responses. Campus redirect returns 307 to visit details.
 - Desktop and 390/320 px layouts reviewed; no horizontal overflow. Registration URL and directions targets checked; external registration was not submitted, and mailto contact was not sent.
 
-## Content still pending
+## Confirmed programme and formation
 
-The detailed programme remains explicitly marked as forthcoming. Add the confirmed sessions, times and speakers when supplied; no schedule has been invented.
+Replaced the forthcoming-programme placeholder with the eight sessions supplied by the organiser, from check-in at 08h00 to the closing ceremony at 16h30. Added the 14h00 GOMYCODE formation with Hajer Betabessi, a dedicated registration action, the original formation poster and the official programme artwork. No durations, rooms, prices or prerequisites were invented. General Forum registration remains separate. Added Panélistes to the header and Formation to the chapter menu.
+
+TypeScript and the production build pass. The supplied Google Form returns HTTP 200 with the title “GENERATIVE AI FOR DATA ANALYTICS”. These additions have responsive CSS for narrow screens, but browser visual verification of this update remains outstanding because the browser-control tool is unavailable; prior layout-review results above apply to the previous release.
 
 ## Archive film correction
 
