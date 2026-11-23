@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useId, useRef } from 'react';
-import { panelists } from '@/content/edition';
+import { moderator, panelists } from '@/content/edition';
 import './forum-panelists.css';
 
-function PanelistPortrait({ panelist }: { panelist: (typeof panelists)[number] }) {
+function PanelistPortrait({ panelist }: { panelist: { name: string; photo: string; frame: readonly [number, number, number, number, number, number] } }) {
   const clip = useId();
   const [width, height, x, y, cropWidth, cropHeight] = panelist.frame;
   return <svg viewBox={`${x} ${y} ${cropWidth} ${cropHeight}`} role="img" aria-label={panelist.name} focusable="false">
@@ -39,6 +39,11 @@ export function ForumPanelists() {
           <div className="ef-panelist-copy"><p className="ef-panelist-label">Panéliste</p><h3 id={'panelist-'+index}>{panelist.name}</h3><p className="ef-panelist-role" lang="en">{panelist.role}</p></div>
         </article>)}
       </div>
+      <article className="ef-moderator" aria-labelledby="moderator-name">
+        <div className="ef-moderator-intro"><p className="ef-index">La modératrice</p><p>Au cœur<br /><em>du dialogue.</em></p></div>
+        <div className="ef-moderator-portrait"><PanelistPortrait panelist={moderator}/></div>
+        <div className="ef-moderator-copy"><p className="ef-panelist-label">Modération du panel</p><h3 id="moderator-name">{moderator.name}</h3><p>{moderator.role}</p><a href="#programme">Le panel · 12h10 <span aria-hidden="true">↗</span></a></div>
+      </article>
       <div className="ef-panelists-ending"><span>Le dialogue continue, au-delà de la scène.</span><a href="#edition-entreprises">Rencontrer les entreprises <span aria-hidden="true">↓</span></a></div>
     </div>
   </section>;

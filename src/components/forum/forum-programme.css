@@ -1,19 +1,3 @@
-.ef-programme{background:#f5f4ed;color:#092b43}
-.ef-programme-inner{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(30px,7vw,110px);padding-block:clamp(56px,8vw,120px)}
-.ef-programme-intro{align-self:start;position:sticky;top:110px}
-.ef-page .ef-programme h2{margin-block:25px;font-size:clamp(40px,5.2vw,80px);line-height:1.03;letter-spacing:-.055em}
-.ef-programme h2 em{color:#a34718;font-style:normal}
-.ef-programme-date{margin-top:40px;font-size:28px;font-weight:750}
-.ef-programme-date span{font-size:15px;font-weight:450}
-.ef-programme-actions{display:flex;flex-direction:column;align-items:start;margin-top:22px}
-.ef-programme-actions a{display:inline-flex;align-items:center;min-height:44px;font-size:14px;font-weight:700;text-decoration:underline;text-underline-offset:5px}
-.ef-agenda{list-style:none;margin:0;padding:0;border-top:1px solid #092b4350}
-.ef-agenda li{display:grid;grid-template-columns:82px minmax(0,1fr);gap:18px;padding:25px 0;border-bottom:1px solid #092b4330}
-.ef-agenda time{font-family:var(--font-mono,monospace);font-size:17px;color:#a34718;padding-top:4px;white-space:nowrap}
-.ef-page .ef-agenda h3{font-size:clamp(18px,1.7vw,26px);line-height:1.25;margin:0;letter-spacing:-.025em}
-.ef-agenda p{margin:9px 0 0;font-size:14px;color:#435969}
-.ef-agenda a{display:inline-flex;align-items:center;gap:16px;min-height:44px;font-size:13px;font-weight:700;text-decoration:underline;text-underline-offset:4px}
-.ef-agenda .ef-agenda-workshop{background:#ffc17e35;padding-inline:18px;margin-inline:-18px;border-bottom-color:#a34718}
 .ef-workshop{background:#0a2c40;color:#fff8ed;overflow:hidden}
 .ef-workshop-inner{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:clamp(30px,7vw,110px);padding-block:clamp(56px,8vw,120px);align-items:center}
 .ef-workshop .ef-index{color:#ffc17e}
@@ -34,6 +18,163 @@
 .ef-workshop-portrait figcaption span{font-family:var(--font-mono,monospace);font-size:11px;color:#ffc17e;letter-spacing:.08em}
 .ef-workshop-portrait figcaption strong{font-size:24px}
 .ef-programme a:focus-visible,.ef-workshop a:focus-visible{outline:2px solid currentColor;outline-offset:5px}
-@media(max-width:760px){.ef-programme-inner,.ef-workshop-inner{grid-template-columns:minmax(0,1fr)}.ef-programme-intro{position:static}.ef-programme-date{margin-top:22px}.ef-programme-actions{flex-direction:row;flex-wrap:wrap;gap:0 20px}.ef-workshop-portrait{width:min(100% - 16px,360px);justify-self:center;margin:10px 0}}
-@media(max-width:390px){.ef-agenda li{grid-template-columns:60px minmax(0,1fr);gap:12px}.ef-agenda time{font-size:14px}.ef-agenda .ef-agenda-workshop{margin-inline:-8px;padding-inline:8px}.ef-workshop .ef-workshop-register{width:100%;padding-inline:14px;gap:10px;font-size:14px}}
+@media(max-width:760px){.ef-workshop-inner{grid-template-columns:minmax(0,1fr)}.ef-workshop-portrait{width:min(100% - 16px,360px);justify-self:center;margin:10px 0}}
+@media(max-width:390px){.ef-workshop .ef-workshop-register{width:100%;padding-inline:14px;gap:10px;font-size:14px}}
 @media(max-width:355px){[data-forum-preview] .ef-header-inner{gap:6px}[data-forum-preview] .ef-direct-nav{gap:7px}[data-forum-preview] .ef-header-cta{padding-inline:6px}[data-forum-preview] .ef-header-cta span{display:none}}
+.ef-programme {
+  background: #f5f4ed;
+  color: #092b43;
+  padding-block: clamp(38px, 5vw, 72px) clamp(64px, 8vw, 120px);
+  border-top: 3px solid #bc5d2b;
+}
+.ef-programme-masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #092b4335;
+}
+.ef-programme-masthead > span,
+.ef-agenda-heading,
+.ef-agenda-number,
+.ef-agenda-hour > span,
+.ef-agenda-tag {
+  font: 600 10px/1.4 ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+}
+.ef-programme-masthead > span { color: #435969; }
+.ef-programme-masthead > span > span { margin-inline: 12px; color: #a34718; }
+.ef-programme-inner {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: clamp(40px, 7vw, 108px);
+  padding-top: clamp(36px, 5vw, 74px);
+}
+.ef-programme-intro { position: sticky; top: 105px; align-self: start; }
+.ef-page .ef-programme h2 {
+  margin: 0 0 22px;
+  font-size: clamp(40px, 4.65vw, 72px);
+  line-height: 1.02;
+  letter-spacing: -.06em;
+}
+.ef-page .ef-programme h2 em { color: #a34718; }
+.ef-programme .ef-programme-deck { font-size: 16px; line-height: 1.7; color: #435969; }
+.ef-programme-place {
+  position: relative;
+  isolation: isolate;
+  min-height: 260px;
+  margin-top: 32px;
+  padding: 24px;
+  color: #fff8ed;
+  background: #092b43;
+  overflow: hidden;
+  border-radius: 0 22px 0 0;
+}
+.ef-programme-place::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, #071724ed, #07172465), linear-gradient(0deg, #071724a0, transparent);
+}
+.ef-programme-place img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.ef-programme-date time { display: flex; align-items: center; gap: 17px; }
+.ef-programme-date time b { font-size: clamp(90px, 9vw, 142px); line-height: 1; font-weight: 650; letter-spacing: -.08em; }
+.ef-programme-date time > span { font-size: 19px; line-height: 1.35; }
+.ef-programme-date p { margin-top: 24px; font-size: 14px; line-height: 1.7; }
+.ef-programme-date p span { color: #ffc17e; }
+.ef-programme-actions { display: flex; flex-wrap: wrap; gap: 0 20px; margin-top: 18px; }
+.ef-programme-actions a { display: inline-flex; align-items: center; min-height: 44px; font-size: 12px; font-weight: 700; text-decoration: underline; text-underline-offset: 5px; }
+.ef-agenda-heading { display: flex; justify-content: space-between; gap: 16px; color: #435969; padding-bottom: 20px; border-bottom: 1px solid #092b4335; }
+.ef-agenda { list-style: none; margin: 0; padding: 0; }
+.ef-agenda li { position: relative; display: grid; grid-template-columns: 105px minmax(0, 1fr); }
+.ef-agenda-hour { padding-top: 27px; padding-right: 20px; }
+.ef-agenda-hour > span { display: block; margin-bottom: 8px; font-size: 9px; color: #63737a; letter-spacing: .04em; }
+.ef-agenda-hour time { display: block; color: #a34718; font-size: clamp(19px, 1.9vw, 27px); font-weight: 650; line-height: 1; letter-spacing: -.05em; white-space: nowrap; }
+.ef-agenda-session { position: relative; padding: 29px 30px 28px; border-left: 1px solid #092b4340; border-bottom: 1px solid #092b4325; }
+.ef-agenda-session::before { content: ''; position: absolute; left: -4px; top: 45px; width: 7px; height: 7px; background: #f5f4ed; border: 1px solid #a34718; border-radius: 50%; }
+.ef-agenda-number { position: absolute; right: 0; top: 13px; color: #66777c; font-size: 9px; }
+.ef-page .ef-agenda h3 { font-size: clamp(18px, 1.65vw, 25px); line-height: 1.25; margin: 0; letter-spacing: -.035em; }
+.ef-agenda-session p { margin-top: 10px; color: #435969; font-size: 13px; line-height: 1.6; }
+.ef-agenda-session a { display: inline-flex; align-items: center; gap: 20px; min-height: 44px; margin-top: 5px; font-size: 12px; font-weight: 700; text-decoration: underline; text-underline-offset: 5px; }
+.ef-agenda .ef-agenda-workshop .ef-agenda-session { background: #092b43; color: #fff8ed; border-radius: 0 16px 0 0; margin-block: 12px; border-bottom: 0; }
+.ef-agenda-workshop .ef-agenda-session::before { background: #ffc17e; border-color: #ffc17e; }
+.ef-agenda-workshop .ef-agenda-number { right: 14px; color: #b0c9d7; }
+.ef-agenda-workshop .ef-agenda-session p { color: #d6e1e5; }
+.ef-agenda-workshop .ef-agenda-session a { color: #ffc17e; }
+.ef-agenda-tag { display: inline-block; color: #ffc17e; font-size: 9px; margin-bottom: 13px; }
+.ef-programme-handoff { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 24px; min-height: 44px; font-size: 13px; font-weight: 650; }
+.ef-programme-handoff span { color: #a34718; font-size: 22px; }
+.ef-programme a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
+.ef-agenda-session::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  left: -1px;
+  top: 0;
+  background: #bc5d2b;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 600ms cubic-bezier(.22, 1, .36, 1);
+}
+.ef-agenda li[data-passed='true'] .ef-agenda-session::after { transform: scaleY(1); }
+.ef-agenda li[data-reading='true'] .ef-agenda-session::after { transform: scaleY(.55); }
+.ef-agenda li[data-reading='true'] .ef-agenda-session::before {
+  background: #bc5d2b;
+  box-shadow: 0 0 0 5px #bc5d2b18;
+  z-index: 1;
+}
+.ef-agenda li:not(.ef-agenda-workshop)[data-reading='true'] .ef-agenda-session { background: #ffc17e18; }
+.ef-agenda li:not(.ef-agenda-workshop)[data-reading='true'] h3 { color: #a34718; }
+.ef-agenda li[data-reading='true'] .ef-agenda-hour time { color: #092b43; }
+.ef-agenda-workshop[data-reading='true'] .ef-agenda-session { box-shadow: 0 10px 26px #092b4315; }
+@media (prefers-reduced-motion: no-preference) {
+  .ef-agenda-session { transition: background-color 350ms ease, box-shadow 350ms ease; }
+  .ef-agenda-session::before { transition: background-color 350ms ease, box-shadow 350ms ease; }
+  .ef-agenda h3, .ef-agenda-hour time { transition: color 350ms ease; }
+  .ef-agenda li[data-arrived='true'] .ef-agenda-hour,
+  .ef-agenda li[data-arrived='true'] .ef-agenda-session > * { animation: ef-agenda-arrive 650ms cubic-bezier(.22, 1, .36, 1) both; }
+  .ef-agenda li[data-arrived='true'] .ef-agenda-session > * { animation-delay: 60ms; }
+}
+@keyframes ef-agenda-arrive {
+  from { opacity: .65; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.ef-agenda-panel[data-motion='reduced'] .ef-agenda *,
+.ef-agenda-panel[data-motion='reduced'] .ef-agenda *::before,
+.ef-agenda-panel[data-motion='reduced'] .ef-agenda *::after {
+  animation: none;
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ef-agenda-session::after { transition: none; }
+}
+@media (hover: hover) {
+  .ef-agenda li:not(.ef-agenda-workshop):hover .ef-agenda-session { background: #092b4305; }
+  .ef-agenda li:hover .ef-agenda-session::before { background: #bc5d2b; }
+}
+@media (max-width: 900px) {
+  .ef-programme-inner { gap: 32px; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
+  .ef-agenda li { grid-template-columns: 83px minmax(0, 1fr); }
+  .ef-agenda-session { padding-inline: 20px; }
+  .ef-programme-place { padding: 20px; }
+}
+@media (max-width: 760px) {
+  .ef-programme-inner { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .ef-programme-intro { position: static; }
+  .ef-programme-place { min-height: 215px; margin-top: 24px; }
+  .ef-programme-date time b { font-size: 100px; }
+  .ef-programme-date p { margin-top: 15px; }
+}
+@media (max-width: 390px) {
+  .ef-programme-masthead { align-items: start; flex-direction: column; gap: 10px; }
+  .ef-agenda li { grid-template-columns: 73px minmax(0, 1fr); }
+  .ef-agenda-hour { padding-right: 12px; }
+  .ef-agenda-session { padding-inline: 16px 10px; }
+  .ef-page .ef-agenda h3 { font-size: 18px; }
+  .ef-agenda-hour > span { font-size: 8px; letter-spacing: 0; }
+  .ef-agenda-tag { font-size: 8px; letter-spacing: .02em; padding-right: 10px; }
+}

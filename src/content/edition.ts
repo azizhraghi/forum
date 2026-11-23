@@ -14,3 +14,10 @@ export const panelists = [
   { name: 'Firas Karoui', role: 'Expert in investment in innovation and startup development', photo: 'firas-karoui.png', frame: [636, 762, 95, 181, 460, 465] },
   { name: 'Ayoub Baba', role: 'International expert in energy and climate', photo: 'ayoub-baba.png', frame: [635, 796, 88, 183, 460, 480] },
 ] as const;
+
+export const moderator = {
+  name: 'Sana Kordoghli',
+  role: 'Assistante professeure en génie énergétique à l’ENSTAB',
+  photo: 'sana-kordoghli.png',
+  frame: [623, 802, 79, 177, 461, 481],
+} as const;

@@ -32,3 +32,9 @@ The shared `forum-film.mp4` now ends at 1:16.5, before the old promotional cards
 ## Confirmed panelists
 
 Added Sadok Besbes, Mouhammad Moncef Ben Amor, Firas Karoui and Ayoub Baba using the supplied names, roles and portrait artwork. This is a separate section between guests of honour and companies, with its own chapter link. Portrait viewports exclude the supplied social-carousel controls. Desktop, 390 px and 320 px layouts were reviewed without horizontal overflow; chapter landing now accounts for scroll padding plus section margins. TypeScript and production build pass. No session times or additional affiliations were invented.
+
+## Programme refinement and moderator
+
+The programme now pairs a campus/date composition with a numbered timeline. Intersection observers highlight the reading position and trigger restrained one-time session reveals; scrolling remains manual. All eight sessions remain in the server-rendered HTML. Motion follows the system preference and the existing Forum motion toggle. The approved updates include a dedicated Sana Kordoghli moderator feature below the four panelists, using the supplied portrait and ENSTAB energy-engineering role. The portrait viewport excludes announcement text and branding.
+
+TypeScript and the production build pass. Browser visual and interaction verification for these additions remains pending because browser control is unavailable in this session.
