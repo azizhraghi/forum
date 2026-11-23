@@ -22,3 +22,7 @@
 ## Content still pending
 
 The detailed programme remains explicitly marked as forthcoming. Add the confirmed sessions, times and speakers when supplied; no schedule has been invented.
+
+## Archive film correction
+
+The shared `forum-film.mp4` now ends at 1:16.5, before the old promotional cards, November 19 date and 8th-edition logo. Its final 0.5 seconds fade picture and original audio out together. The inline player still starts at 0:08; the beginning link uses the same corrected file. Final frames were inspected and the production build passed.
