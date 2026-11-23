@@ -21,27 +21,41 @@ export function ForumLineup() {
     const preference = matchMedia('(prefers-reduced-motion: reduce), (max-width: 760px)');
     let frame = 0;
     let reduced = false;
+    const section = container.querySelector<HTMLElement>('.ef-voices');
+    const chapters = ['premiere', 'meeting', 'music-finale'].map((name) =>
+      container.querySelector<HTMLElement>('.ef-' + name),
+    ).filter((chapter): chapter is HTMLElement => chapter !== null);
+    const appliedArrival = new Map<HTMLElement, number>();
+    let appliedProgress = -1;
 
     function update() {
       frame = 0;
       if (!container) return;
-      const section = container.querySelector<HTMLElement>('.ef-voices');
-      container.dataset.motion = preference.matches || reduced ? 'reduced' : 'full';
+      const mode = preference.matches || reduced ? 'reduced' : 'full';
+      if (container.dataset.motion !== mode) container.dataset.motion = mode;
       if (!section || preference.matches || reduced) return;
-      for (const name of ['premiere', 'meeting', 'music-finale']) {
-        const chapter = container.querySelector<HTMLElement>('.ef-' + name);
-        if (!chapter) continue;
-        const box = chapter.getBoundingClientRect();
+      const bounds = container.getBoundingClientRect();
+      if (bounds.bottom <= 0 || bounds.top >= innerHeight) return;
+      // Finish layout reads before changing any styles in the edition story.
+      const positions = chapters.map((chapter) => ({ chapter, box: chapter.getBoundingClientRect() }));
+      const rect = section.getBoundingClientRect();
+      const sectionHeight = section.offsetHeight;
+      for (const { chapter, box } of positions) {
         if (box.bottom > 0 && box.top < innerHeight) {
           const arrival = Math.max(0, Math.min(1, (innerHeight - box.top) / (innerHeight * .9)));
-          chapter.style.setProperty('--arrival', String(arrival));
+          if (appliedArrival.get(chapter) !== arrival) {
+            chapter.style.setProperty('--arrival', String(arrival));
+            appliedArrival.set(chapter, arrival);
+          }
         }
       }
-      const rect = section.getBoundingClientRect();
-      const progress = Math.max(0, Math.min(1, (90 - rect.top) / Math.max(1, section.offsetHeight - innerHeight + 90)));
+      const progress = Math.max(0, Math.min(1, (90 - rect.top) / Math.max(1, sectionHeight - innerHeight + 90)));
 
       if (!manualGuest.current) setGuest(Math.min(guests.length - 1, Math.floor(progress * guests.length)));
-      container.style.setProperty('--lineup-journey', String(progress));
+      if (appliedProgress !== progress) {
+        section.style.setProperty('--lineup-journey', String(progress));
+        appliedProgress = progress;
+      }
     }
     function schedule() { if (!frame) frame = requestAnimationFrame(update); }
     function motion(event: Event) { reduced = Boolean((event as CustomEvent<{reduced:boolean}>).detail?.reduced); schedule(); }

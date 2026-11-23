@@ -28,8 +28,11 @@ function scrub(video: HTMLVideoElement, filename: string) {
   let requested = false;
   let enabled = false;
   function seek() {
-    if (!enabled || video.seeking || !Number.isFinite(video.duration) || video.readyState < 2) return;
-    const time = progress * Math.max(0, video.duration - 0.05);
+    if (!enabled || document.hidden || video.seeking || !Number.isFinite(video.duration) || video.readyState < 2) return;
+    // Both bundled scrub clips contain 24 frames per second. Seek to actual
+    // frames rather than repeatedly decoding sub-frame scroll positions.
+    const lastFrame = Math.max(0, Math.floor((video.duration - 0.05) * 24));
+    const time = Math.round(progress * lastFrame) / 24;
     if (Number.isFinite(appliedTime) && Math.abs(time - appliedTime) < 0.025) return;
     if (Math.abs(video.currentTime - time) > 0.02) {
       appliedTime = time;
@@ -255,6 +258,7 @@ export function ForumStory({ preview = false }: { preview?: boolean }) {
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', resized);
     window.addEventListener('forum-motion-change', changeMotion);
+    document.addEventListener('visibilitychange', schedule);
     preference.addEventListener('change', schedule);
     connection?.addEventListener('change', schedule);
     geometry();
@@ -265,6 +269,7 @@ export function ForumStory({ preview = false }: { preview?: boolean }) {
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', resized);
       window.removeEventListener('forum-motion-change', changeMotion);
+      document.removeEventListener('visibilitychange', schedule);
       preference.removeEventListener('change', schedule);
       connection?.removeEventListener('change', schedule);
       earth.dispose();

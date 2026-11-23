@@ -14,19 +14,25 @@ export function ForumContinuation({ children }: { children: ReactNode }) {
     const preference = matchMedia('(prefers-reduced-motion: reduce)');
     let simplified = false;
     let frame = 0;
+    const applied = new Map<HTMLElement, number>();
 
     function update() {
       frame = 0;
       if (!container) return;
       const reduced = preference.matches || simplified;
-      container.dataset.motion = reduced ? 'reduced' : 'full';
-      for (const chapter of visible) {
-        const rect = chapter.getBoundingClientRect();
+      const mode = reduced ? 'reduced' : 'full';
+      if (container.dataset.motion !== mode) container.dataset.motion = mode;
+      if (reduced) return;
+      const positions = [...visible].map((chapter) => ({ chapter, rect: chapter.getBoundingClientRect() }));
+      for (const { chapter, rect } of positions) {
         const progress = Math.min(
           1,
           Math.max(0, (innerHeight - rect.top) / (innerHeight + rect.height)),
         );
-        chapter.style.setProperty('--chapter-progress', String(progress));
+        if (applied.get(chapter) !== progress) {
+          chapter.style.setProperty('--chapter-progress', String(progress));
+          applied.set(chapter, progress);
+        }
       }
     }
     function schedule() {
