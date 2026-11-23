@@ -10,6 +10,7 @@ const storyChapters = [
   { id: 'rencontres', label: 'Le Forum de l’intérieur', short: 'Le film' },
   { id: 'teaser', label: 'Le teaser de cette édition', short: 'Teaser 2026' },
   { id: 'invites', label: 'Les invités d’honneur', short: 'Invités' },
+  { id: 'panelistes', label: 'Les panélistes du Forum', short: 'Panélistes' },
   { id: 'edition-entreprises', label: 'Les exposants et sponsors 2026', short: 'Édition 2026' },
   { id: 'film', label: 'Le Forum en photos', short: 'Les photos' },
 ] as const;
@@ -30,9 +31,18 @@ export function ForumRoute({ preview = false }: { preview?: boolean }) {
     const story = document.querySelector<HTMLElement>('.ef-filmstory');
     const header = document.querySelector<HTMLElement>('.ef-header');
     let frame = 0;
+    let anchorInset = 0;
+    function measureAnchorInset() {
+      const padding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+      const margin = Math.max(0, ...chapters.map(({ id }) => {
+        const target = document.getElementById(id);
+        return target ? parseFloat(getComputedStyle(target).scrollMarginTop) || 0 : 0;
+      }));
+      anchorInset = padding + margin + 2;
+    }
     function update() {
       frame = 0;
-      const readingLine = (header?.getBoundingClientRect().bottom ?? 0) + 28;
+      const readingLine = Math.max((header?.getBoundingClientRect().bottom ?? 0) + 28, anchorInset);
       let index = 0;
       if (story?.dataset.enhanced === 'true') {
         index = chapters.findIndex(({ id }) => id === story.dataset.chapter);
@@ -58,6 +68,7 @@ export function ForumRoute({ preview = false }: { preview?: boolean }) {
     function schedule() {
       if (!frame) frame = requestAnimationFrame(update);
     }
+    function resized() { measureAnchorInset(); schedule(); }
     const observer = new MutationObserver(schedule);
     if (story)
       observer.observe(story, {
@@ -65,13 +76,14 @@ export function ForumRoute({ preview = false }: { preview?: boolean }) {
         attributeFilter: ['data-chapter', 'data-enhanced'],
       });
     window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule);
+    window.addEventListener('resize', resized);
+    measureAnchorInset();
     schedule();
     return () => {
       observer.disconnect();
       cancelAnimationFrame(frame);
       window.removeEventListener('scroll', schedule);
-      window.removeEventListener('resize', schedule);
+      window.removeEventListener('resize', resized);
     };
   }, [chapters]);
 

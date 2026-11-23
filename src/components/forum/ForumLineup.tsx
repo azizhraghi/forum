@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import './forum-lineup.css';
 import { ExhibitorWall } from './ExhibitorWall';
 import { EditionArtworkViewer } from './EditionArtworkViewer';
+import { ForumPanelists } from './ForumPanelists';
 
 import { guests, sponsors } from '@/content/edition';
 const art = '/assets/forum/edition-2026/';
@@ -73,9 +74,10 @@ export function ForumLineup() {
           <div className="ef-voice-copy"><span className="ef-voice-org">{guests[guest][3]}</span><h3>{guests[guest][0]}</h3><p lang="en">{guests[guest][1]}</p><div className="ef-voice-arrows"><button type="button" disabled={guest===0} aria-label="Invité précédent" onClick={()=>{manualGuest.current=true;setGuest(guest-1);}}>←</button><span>{number(guest)} / {String(guests.length).padStart(2,'0')}</span><button type="button" disabled={guest===guests.length-1} aria-label="Invité suivant" onClick={()=>{manualGuest.current=true;setGuest(guest+1);}}>→</button></div></div>
         </div>
         <nav className="ef-wrap ef-voice-selector" aria-label="Choisir un invité" onKeyDown={(event)=>{if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();manualGuest.current=true;const next=(guest+(event.key==='ArrowRight'?1:guests.length-1))%guests.length;setGuest(next);(event.currentTarget.children[next] as HTMLButtonElement)?.focus();}}}>{guests.map(([name,,,org],i)=><button key={name} type="button" aria-pressed={guest===i} onClick={()=>{manualGuest.current=true;setGuest(i);}}><img src={"/assets/forum/guests/"+guests[i][2]} alt="" loading="lazy" /><span>{number(i)}</span><strong>{name}</strong><small>{org}</small></button>)}</nav>
-        <a className="ef-voices-exit" href="#edition-entreprises">La rencontre continue <span aria-hidden="true">↓</span></a>
+        <a className="ef-voices-exit" href="#panelistes">Rencontrer les panélistes <span aria-hidden="true">↓</span></a>
       </div>
     </section>
+    <ForumPanelists />
     <section id="edition-entreprises" className="ef-meeting" aria-labelledby="current-title" tabIndex={-1}><div className="ef-meeting-campus" aria-hidden="true"><img src="/assets/forum/enstab-courtyard.webp" alt="" loading="lazy" /></div>
       <div className="ef-wrap ef-meeting-heading"><p className="ef-index">03 / Les entreprises de cette édition</p><h2 id="current-title">De l’autre côté<br />de la <em>rencontre.</em></h2><p>Un échange peut ouvrir une nouvelle voie.<br />Découvrez les onze exposants du Forum.</p></div>
       <ExhibitorWall />
